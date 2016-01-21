@@ -1,8 +1,12 @@
 (ns avro-utils.core
-  (:require [avro-utils.avro2json :as a2j]))
+  (:require [avro-utils
+             [avro2json :refer [avro-schema->json-schema]]
+             [validation :refer [validate-data-with-schema]]]
+            [cheshire.core :as json]))
 
-(def avro-schema->json-schema
-  "Convenience function to turn an avro schema into
-  a valid V4 JSON schema."
-  (comp a2j/result->node-string
-     a2j/avro-schema->processing-result))
+(defn validate [schema-name data]
+  (let [schema (avro-schema->json-schema schema-name)
+        data (if (map? data)
+               (json/generate-string data)
+               data)]
+    (validate-data-with-schema schema data)))

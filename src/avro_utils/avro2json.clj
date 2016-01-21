@@ -26,7 +26,7 @@
       (chainWith syntax)
       (getProcessor)))
 
-(defn result->string [result]
+(defn processing-result->string [result]
   (str (.. result
            (getResult)
            (getValue)
@@ -48,5 +48,5 @@
 (def avro-schema->json-schema
   "Convenience function to turn an avro schema into
   a valid V4 JSON schema."
-  (comp result->node-string
+  (comp processing-result->string
      avro-schema->processing-result))

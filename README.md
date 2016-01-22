@@ -6,17 +6,28 @@ This is a very basic wrapper for a couple of utilities found in [json schema avr
 
 ## Usage
 
-There is a single convenience method to validate your data against a schema on the classpath
+There is a single convenience method to validate your data against an Avro schema
 
     (ns test
       (:require [avro-utils.core :refer [validate]))
 
-    (let [schema "sample.json"
+      (def schema_
+        "{
+          \"namespace\": \"com.test\",
+          \"type\": \"record\",
+          \"name\": \"Test\",
+          \"fields\": [
+                      {\"name\": \"id\", \"type\": \"string\"},
+                      {\"name\": \"fact\", \"type\": \"string\"}
+                      ]
+          }")
+
+    (let [schema schema_
           data {:id "blah" :fact "interesting"}
           validation-result (validate schema data)]
       (assert (= true (:valid? validation-result))))
 
-    (let [schema "sample.json"
+    (let [schema schema_
           data {:id 1 :fact null}
           validation-result (validate schema data)]
       (assert (= false (:valid? validation-result)))

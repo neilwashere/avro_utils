@@ -1,9 +1,0 @@
-{
-    "namespace": "com.",
-    "type": "record",
-    "name":,
-    "fields": [
-        {"name": "id", "type": "string"},
-        {"name": "fact", "type": "string"}
-    ]
-}

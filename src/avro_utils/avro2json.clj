@@ -35,8 +35,6 @@
 (defn avro-schema->processing-result [s]
   (let [report (ListProcessingReport.)
         holder (-> s
-                   io/resource
-                   slurp
                    JsonLoader/fromString
                    SimpleJsonTree.
                    ValueHolder/hold)]

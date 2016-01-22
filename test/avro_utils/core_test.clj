@@ -2,16 +2,26 @@
   (:require [clojure.test :refer :all]
             [avro-utils.core :refer :all]))
 
+  (def schema_ "{
+              \"namespace\": \"com.test\",
+              \"type\": \"record\",
+              \"name\": \"Test\",
+              \"fields\": [
+                         {\"name\": \"id\", \"type\": \"string\"},
+                         {\"name\": \"fact\", \"type\": \"string\"}
+                         ]
+              }")
+
 (deftest validation-success
 
   (testing "A valid map will pass schema validation"
-    (let [schema "sample.json"
+    (let [schema schema_
           data {:id "some id" :fact "this is true"}
           result (validate schema data)]
       (is (:valid? result)))))
 
 (deftest validation-failure
-  (let [schema "sample.json"
+  (let [schema schema_
         data {:id 1 :fact 24}
         result (validate schema data)]
 
